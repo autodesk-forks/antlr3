@@ -95,7 +95,15 @@ private:
      */
     ANTLR_UINT32	m_channel;
 	
-	mutable StringType		m_tokText;
+    // FIXME: Autodesk/Amino:
+    //
+    // Since we are not modifying the token stream in place, we have
+    // no use for having token referring to a string which is not part
+    // of the input stream. It turns out that being able to insert a
+    // token referring to a token allocated on the fly incurs a
+    // disproportionate of runtime cost...
+    //
+	// mutable StringType		m_tokText;
 
     /** The offset into the input stream that the line in which this
      *  token resides starts.
@@ -147,29 +155,37 @@ public:
      * API 
      */
 
-    /** Function that returns the text pointer of a token, use
-     *  toString() if you want a pANTLR3_STRING version of the token.
-     */
-    StringType  getText() const;
-	
-    /** Pointer to a function that 'might' be able to set the text associated
-     *  with a token. Imaginary tokens such as an ANTLR3_CLASSIC_TOKEN may actually
-     *  do this, however many tokens such as ANTLR3_COMMON_TOKEN do not actaully have
-     *  strings associated with them but just point into the current input stream. These
-     *  tokens will implement this function with a function that errors out (probably
-     *  drastically.
-     */
-    void set_tokText( const StringType& text );
+    // FIXME: Autodesk/Amino:
+    //
+    // Since we are not modifying the token stream in place, we have
+    // no use for having token referring to a string which is not part
+    // of the input stream. It turns out that being able to insert a
+    // token referring to a token allocated on the fly incurs a
+    // disproportionate of runtime cost... 
 
-    /** Pointer to a function that 'might' be able to set the text associated
-     *  with a token. Imaginary tokens such as an ANTLR3_CLASSIC_TOKEN may actually
-     *  do this, however many tokens such as ANTLR3_COMMON_TOKEN do not actully have
-     *  strings associated with them but just point into the current input stream. These
-     *  tokens will implement this function with a function that errors out (probably
-     *  drastically.
-     */
-    void	setText(ANTLR_UINT8* text);
-	void	setText(const char* text);
+    // /** Function that returns the text pointer of a token, use
+    //  *  toString() if you want a pANTLR3_STRING version of the token.
+    //  */
+    // StringType  getText() const;
+	
+    // /** Pointer to a function that 'might' be able to set the text associated
+    //  *  with a token. Imaginary tokens such as an ANTLR3_CLASSIC_TOKEN may actually
+    //  *  do this, however many tokens such as ANTLR3_COMMON_TOKEN do not actaully have
+    //  *  strings associated with them but just point into the current input stream. These
+    //  *  tokens will implement this function with a function that errors out (probably
+    //  *  drastically.
+    //  */
+    // void set_tokText( const StringType& text );
+
+    // /** Pointer to a function that 'might' be able to set the text associated
+    //  *  with a token. Imaginary tokens such as an ANTLR3_CLASSIC_TOKEN may actually
+    //  *  do this, however many tokens such as ANTLR3_COMMON_TOKEN do not actully have
+    //  *  strings associated with them but just point into the current input stream. These
+    //  *  tokens will implement this function with a function that errors out (probably
+    //  *  drastically.
+    //  */
+    // void	setText(ANTLR_UINT8* text);
+	// void	setText(const char* text);
 
     /** Pointer to a function that returns the token type of this token
      */

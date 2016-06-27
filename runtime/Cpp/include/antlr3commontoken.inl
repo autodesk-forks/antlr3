@@ -44,7 +44,7 @@ CommonToken<ImplTraits>::CommonToken(TOKEN_TYPE type)
 
 template<class ImplTraits>
 CommonToken<ImplTraits>::CommonToken( const CommonToken& ctoken )
-	:m_tokText( ctoken.m_tokText )
+//	:m_tokText( ctoken.m_tokText )
 {
 	m_type = ctoken.m_type;
 	m_channel = ctoken.m_channel;
@@ -70,7 +70,7 @@ CommonToken<ImplTraits>& CommonToken<ImplTraits>::operator=( const CommonToken& 
 	m_startIndex = ctoken.m_startIndex;
 	m_stopIndex = ctoken.m_stopIndex;
 
-	m_tokText = ctoken.m_tokText;
+//	m_tokText = ctoken.m_tokText;
 	return *this;
 }
 
@@ -118,54 +118,67 @@ void CommonToken<ImplTraits>::set_input( InputStreamType* input )
 	m_input = input;
 }
 
-template<class ImplTraits>
-typename CommonToken<ImplTraits>::StringType  CommonToken<ImplTraits>::getText() const
-{
-	if ( !m_tokText.empty() )
-		return m_tokText;
+//------------------------------------------------------------------------------
+//
 
-	// EOF is a special case
-	//
-	if ( m_type == TOKEN_EOF)
-	{
-		m_tokText	= "<EOF>";
-		return m_tokText;
-	}
+// FIXME: Autodesk/Amino:
+//
+// Since we are not modifying the token stream in place, we have
+// no use for having token referring to a string which is not part
+// of the input stream. It turns out that being able to insert a
+// token referring to a token allocated on the fly incurs a
+// disproportionate of runtime cost...
+// template<class ImplTraits>
+// typename CommonToken<ImplTraits>::StringType  CommonToken<ImplTraits>::getText() const
+// {
+// 	if ( !m_tokText.empty() )
+// 		return m_tokText;
 
-	// We had nothing installed in the token, create a new string
-	// from the input stream
-	//
-	if	(m_input != NULL)
-		return	m_input->substr(	this->get_startIndex(), this->get_stopIndex() );
+// 	// EOF is a special case
+// 	//
+// 	if ( m_type == TOKEN_EOF)
+// 	{
+// 		m_tokText	= "<EOF>";
+// 		return m_tokText;
+// 	}
 
-	// Nothing to return, there is no input stream
-	//
-	return "";
-}
+// 	// We had nothing installed in the token, create a new string
+// 	// from the input stream
+// 	//
+// 	if	(m_input != NULL)
+// 		return	m_input->substr(	this->get_startIndex(), this->get_stopIndex() );
 
-template<class ImplTraits>
-ANTLR_INLINE void CommonToken<ImplTraits>::set_tokText( const StringType& text )
-{
-	m_tokText = text;
-}
+// 	// Nothing to return, there is no input stream
+// 	//
+// 	return "";
+// }
 
-template<class ImplTraits>
-ANTLR_INLINE void CommonToken<ImplTraits>::setText(ANTLR_UINT8* text)
-{
-	if( text == NULL )
-		m_tokText.clear();
-	else
-		m_tokText = (const char*) text;
-}
+// template<class ImplTraits>
+// ANTLR_INLINE void CommonToken<ImplTraits>::set_tokText( const StringType& text )
+// {
+// 	m_tokText = text;
+// }
 
-template<class ImplTraits>
-ANTLR_INLINE void	CommonToken<ImplTraits>::setText(const char* text)
-{
-	if( text == NULL )
-		m_tokText.clear();
-	else
-		m_tokText = (const char*) text;
-}
+// template<class ImplTraits>
+// ANTLR_INLINE void CommonToken<ImplTraits>::setText(ANTLR_UINT8* text)
+// {
+// 	if( text == NULL )
+// 		m_tokText.clear();
+// 	else
+// 		m_tokText = (const char*) text;
+// }
+
+// template<class ImplTraits>
+// ANTLR_INLINE void	CommonToken<ImplTraits>::setText(const char* text)
+// {
+// 	if( text == NULL )
+// 		m_tokText.clear();
+// 	else
+// 		m_tokText = (const char*) text;
+// }
+
+//
+//------------------------------------------------------------------------------
 
 template<class ImplTraits>
 ANTLR_INLINE ANTLR_UINT32  CommonToken<ImplTraits>::get_type() const
@@ -280,7 +293,7 @@ typename CommonToken<ImplTraits>::StringType  CommonToken<ImplTraits>::toString(
 {
     StringType  text;
     typedef typename ImplTraits::StringStreamType StringStreamType;
-    StringStreamType  outtext; 
+    StringStreamType  outtext;
 
     text    =	this->getText();
 

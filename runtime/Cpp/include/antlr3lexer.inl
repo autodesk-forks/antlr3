@@ -128,7 +128,7 @@ void	Lexer<ImplTraits>::setCharStream(InputStreamType* input)
      */
 	RecognizerSharedStateType* state = this->get_rec()->get_state();
     state->set_token_present( false );
-	state->set_text("");
+    // state->set_text("");
     state->set_tokenStartCharIndex(-1);
 
     /* Copy the name of the char stream to the token source
@@ -208,7 +208,7 @@ typename Lexer<ImplTraits>::CommonTokenType*	Lexer<ImplTraits>::emit()
     token->set_line( state->get_tokenStartLine() );
     token->set_charPositionInLine( state->get_tokenStartCharPositionInLine() );
 
-	token->set_tokText( state->get_text() );
+    // token->set_tokText( state->get_text() );
     token->set_lineStart( this->get_input()->get_currentLine() );
 
     return  token;
@@ -589,4 +589,3 @@ ANTLR_INLINE void Lexer<ImplTraits>::consume()
 }
 
 ANTLR_END_NAMESPACE()
-

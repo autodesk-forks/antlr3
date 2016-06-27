@@ -52,7 +52,7 @@ ANTLR_INLINE void BaseRecognizer<ImplTraits, StreamType>::set_debugger( DebugEve
 }
 
 template< class ImplTraits, class StreamType >
-const typename BaseRecognizer<ImplTraits, StreamType>::UnitType* 
+const typename BaseRecognizer<ImplTraits, StreamType>::UnitType*
 BaseRecognizer<ImplTraits, StreamType>::match(ANTLR_UINT32 ttype, BitsetListType* follow)
 {
 	SuperType*  super = static_cast<SuperType*>(this);
@@ -414,7 +414,7 @@ typename BaseRecognizer<ImplTraits, StreamType>::BitsetType*	BaseRecognizer<Impl
 }
 
 template< class ImplTraits, class StreamType >
-const typename BaseRecognizer<ImplTraits, StreamType>::UnitType* 
+const typename BaseRecognizer<ImplTraits, StreamType>::UnitType*
 BaseRecognizer<ImplTraits, StreamType>::recoverFromMismatchedToken( ANTLR_UINT32	ttype, BitsetListType*	follow)
 {
 	SuperType* super = static_cast<SuperType*>(this);
@@ -431,6 +431,7 @@ BaseRecognizer<ImplTraits, StreamType>::recoverFromMismatchedToken( ANTLR_UINT32
 		// Create an exception if we need one
 		//
 		new ANTLR_Exception<ImplTraits, UNWANTED_TOKEN_EXCEPTION, StreamType>(this, "");
+		m_state->get_exception()->set_expecting(ttype);
 
 		// Call resync hook (for debuggers and so on)
 		//
@@ -505,7 +506,7 @@ BaseRecognizer<ImplTraits, StreamType>::recoverFromMismatchedToken( ANTLR_UINT32
 }
 
 template< class ImplTraits, class StreamType >
-const typename BaseRecognizer<ImplTraits, StreamType>::UnitType* 
+const typename BaseRecognizer<ImplTraits, StreamType>::UnitType*
 BaseRecognizer<ImplTraits, StreamType>::recoverFromMismatchedSet(BitsetListType*	follow)
 {
 	SuperType* super = static_cast<SuperType*>(this);
@@ -878,7 +879,7 @@ void  BaseRecognizer<ImplTraits, StreamType>::reset( ClassForwarder<LexerType> )
     m_state->set_tokenStartCharIndex( -1 );
     m_state->set_tokenStartCharPositionInLine(-1);
     m_state->set_tokenStartLine( -1 );
-    m_state->set_text("");
+    // m_state->set_text("");
 }
 
 template< class ImplTraits, class StreamType >

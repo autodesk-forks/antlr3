@@ -211,7 +211,16 @@ typename Parser<ImplTraits>::TokenType*	Parser<ImplTraits>::getMissingSymbol( In
 		current = cts->_LT(-1);
 	}
 
-	token	= new CommonTokenType;
+    // FIXME: Autodesk/Amino:
+    //
+    // There does not seem to be any need to allocate a new token each
+    // time. Allocating a new one leads to memory leaks as indicated by
+    // Valgrind. Reusing a statically allocated token when reporting errors
+    // about a missing token seems to work!
+    //
+	// token	= new CommonTokenType;
+    static CommonTokenType foo;
+	token	= &foo;
 
 	// Set some of the token properties based on the current token
 	//
@@ -222,15 +231,23 @@ typename Parser<ImplTraits>::TokenType*	Parser<ImplTraits>::getMissingSymbol( In
     token->set_lineStart( current->get_lineStart() );
 
 	// Create the token text that shows it has been inserted
-	//
-	token->setText("<missing ");
-	text = token->getText();
 
-	if	(!text.empty())
-	{
-		text.append((const char *) this->get_rec()->get_state()->get_tokenName(expectedTokenType) );
-		text.append(">");
-	}
+    // FIXME: Autodesk/Amino:
+    //
+    // Since we are not modifying the token stream in place, we have
+    // no use for having token referring to a string which is not part
+    // of the input stream. It turns out that being able to insert a
+    // token referring to a token allocated on the fly incurs a
+    // disproportionate of runtime cost...
+	//
+	// token->setText("<missing ");
+	// text = token->getText();
+
+	// if	(!text.empty())
+	// {
+	// 	text.append((const char *) this->get_rec()->get_state()->get_tokenName(expectedTokenType) );
+	// 	text.append(">");
+	// }
 
 	// Finally return the pointer to our new token
 	//
@@ -498,9 +515,9 @@ ANTLR_INLINE typename Parser<ImplTraits>::TokenStreamType* Parser<ImplTraits>::g
 }
 
 template< class ImplTraits>
-ANTLR_INLINE RuleReturnValue<ImplTraits>::RuleReturnValue(BaseParserType* psr) 
-{ 
-	parser = psr; 
+ANTLR_INLINE RuleReturnValue<ImplTraits>::RuleReturnValue(BaseParserType* psr)
+{
+	parser = psr;
 	start = NULL;
 	stop = NULL;
 }
@@ -508,7 +525,7 @@ ANTLR_INLINE RuleReturnValue<ImplTraits>::RuleReturnValue(BaseParserType* psr)
 template< class ImplTraits>
 ANTLR_INLINE RuleReturnValue<ImplTraits>::RuleReturnValue( const RuleReturnValue& val )
 {
-	parser	= val.parser; 
+	parser	= val.parser;
 	start	= val.start;
 	stop	= val.stop;
 }
@@ -516,7 +533,7 @@ ANTLR_INLINE RuleReturnValue<ImplTraits>::RuleReturnValue( const RuleReturnValue
 template< class ImplTraits>
 ANTLR_INLINE RuleReturnValue<ImplTraits>& RuleReturnValue<ImplTraits>::operator=( const RuleReturnValue& val )
 {
-	parser	= val.parser; 
+	parser	= val.parser;
 	start	= val.start;
 	stop	= val.stop;
 	return *this;
@@ -530,7 +547,7 @@ ANTLR_INLINE RuleReturnValue<ImplTraits>::~RuleReturnValue()
 template< class ImplTraits>
 ANTLR_INLINE void RuleReturnValue<ImplTraits>::call_start_placeholder()
 {
-	start = parser->LT(1); 
+	start = parser->LT(1);
 	stop = start;
 }
 
@@ -577,7 +594,7 @@ RuleReturnValue_1<ImplTraits>::~RuleReturnValue_1()
 			ANTLR_MARKER stop_token_idx		= BaseType::stop->get_index() - 1;
 			if( start_token_idx > stop_token_idx )
 				return;
-			BaseType::parser->getTokenStream()->discardTokens( start_token_idx, stop_token_idx); 
+			BaseType::parser->getTokenStream()->discardTokens( start_token_idx, stop_token_idx);
 		}
 	}
 }

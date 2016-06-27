@@ -37,7 +37,7 @@ ANTLR_INLINE bool RecognizerSharedState<ImplTraits, StreamType>::get_error() con
 	return m_error;
 }
 template<class ImplTraits, class StreamType>
-ANTLR_INLINE typename RecognizerSharedState<ImplTraits, StreamType>::ExceptionBaseType* 
+ANTLR_INLINE typename RecognizerSharedState<ImplTraits, StreamType>::ExceptionBaseType*
 RecognizerSharedState<ImplTraits, StreamType>::get_exception() const
 {
 	return m_exception;
@@ -125,11 +125,11 @@ ANTLR_INLINE ANTLR_MARKER RecognizerSharedState<ImplTraits, StreamType>::get_tok
 {
 	return m_tokenStartCharIndex;
 }
-template<class ImplTraits, class StreamType>
-ANTLR_INLINE typename RecognizerSharedState<ImplTraits, StreamType>::StringType& RecognizerSharedState<ImplTraits, StreamType>::get_text()
-{
-	return m_text;
-}
+// template<class ImplTraits, class StreamType>
+// ANTLR_INLINE typename RecognizerSharedState<ImplTraits, StreamType>::StringType& RecognizerSharedState<ImplTraits, StreamType>::get_text()
+// {
+// 	return m_text;
+// }
 template<class ImplTraits, class StreamType>
 ANTLR_INLINE typename RecognizerSharedState<ImplTraits, StreamType>::StreamsType& RecognizerSharedState<ImplTraits, StreamType>::get_streams()
 {
@@ -235,11 +235,11 @@ ANTLR_INLINE void RecognizerSharedState<ImplTraits, StreamType>::set_tokenStartC
 {
 	m_tokenStartCharIndex = tokenStartCharIndex;
 }
-template<class ImplTraits, class StreamType>
-ANTLR_INLINE void RecognizerSharedState<ImplTraits, StreamType>::set_text( const StringType& text )
-{
-	m_text = text;
-}
+// template<class ImplTraits, class StreamType>
+// ANTLR_INLINE void RecognizerSharedState<ImplTraits, StreamType>::set_text( const StringType& text )
+// {
+// 	m_text = text;
+// }
 template<class ImplTraits, class StreamType>
 ANTLR_INLINE void RecognizerSharedState<ImplTraits, StreamType>::set_streams( const InputStreamsType& streams )
 {

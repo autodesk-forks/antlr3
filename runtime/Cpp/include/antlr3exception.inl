@@ -237,10 +237,10 @@ void ANTLR_Exception<ImplTraits, Ex, StreamType>::displayRecognitionError( ANTLR
 		// You may get this if there are not more tokens and more are needed
 		// to complete a parse for instance.
 		//
-		str_stream << " : syntax error...\n"; 
+		str_stream << ": syntax error...\n"; 
 		break;
 	case UNWANTED_TOKEN_EXCEPTION:
-		// Indicates that the recognizer was fed a token which seesm to be
+		// Indicates that the recognizer was fed a token which seems to be
 		// spurious input. We can detect this when the token that follows
 		// this unwanted token would normally be part of the syntactically
 		// correct stream. Then we can see that the token we are looking at
@@ -248,18 +248,18 @@ void ANTLR_Exception<ImplTraits, Ex, StreamType>::displayRecognitionError( ANTLR
 		//
 		if	(tokenNames == NULL)
 		{
-			str_stream << " : Extraneous input...";
+			str_stream << ": extraneous input...";
 		}
 		else
 		{
 			if	( BaseType::m_expecting == ImplTraits::CommonTokenType::TOKEN_EOF)
 			{
-				str_stream << " : Extraneous input - expected <EOF>\n";
+				str_stream <<" : extraneous input expecting <EOF>\n";
 			}
 			else
 			{
-				str_stream << " : Extraneous input - expected "
-						   << tokenNames[ BaseType::m_expecting] << " ...\n";
+				str_stream << ": extraneous input expecting "
+						   << tokenNames[ BaseType::m_expecting] << "\n";
 			}
 		}
 		break;
@@ -271,18 +271,18 @@ void ANTLR_Exception<ImplTraits, Ex, StreamType>::displayRecognitionError( ANTLR
 		//
 		if	(tokenNames == NULL)
 		{
-			str_stream << " : Missing token ("
+			str_stream << ": missing token ("
 					   << BaseType::m_expecting << ")...\n";
 		}
 		else
 		{
 			if	( BaseType::m_expecting == ImplTraits::CommonTokenType::TOKEN_EOF )
 			{
-				str_stream <<" : Missing <EOF>\n";
+				str_stream <<": missing <EOF>\n";
 			}
 			else
 			{
-				str_stream << " : Missing " << tokenNames[BaseType::m_expecting] <<" \n";
+				str_stream << ": missing " << tokenNames[BaseType::m_expecting] <<" \n";
 			}
 		}
 		break;
@@ -292,7 +292,7 @@ void ANTLR_Exception<ImplTraits, Ex, StreamType>::displayRecognitionError( ANTLR
 		// you should. It means that at the point where the current token occurred
 		// that the DFA indicates nowhere to go from here.
 		//
-		str_stream << " : cannot match to any predicted input...\n";
+		str_stream << ": cannot match to any predicted input...\n";
 		break;
 	case MISMATCHED_SET_EXCEPTION:
 		{
@@ -306,7 +306,7 @@ void ANTLR_Exception<ImplTraits, Ex, StreamType>::displayRecognitionError( ANTLR
 			// possible tokens at this point, but we did not see any
 			// member of that set.
 			//
-			str_stream << " : unexpected input...\n  expected one of : ";
+			str_stream << ": unexpected input...\n  expected one of : ";
 
 			// What tokens could we have accepted at this point in the
 			// parse?
@@ -338,16 +338,16 @@ void ANTLR_Exception<ImplTraits, Ex, StreamType>::displayRecognitionError( ANTLR
 			}
 			else
 			{
-				str_stream << "Actually dude, we didn't seem to be expecting anything here, or at least\n";
-				str_stream << "I could not work out what I was expecting, like so many of us these days!\n";
+				str_stream << "We didn't seem to be expecting anything here, or at least\n";
+				str_stream << "we could not work out what is expecting!\n";
 			}
 		}
 		break;
 	case EARLY_EXIT_EXCEPTION:
-		str_stream << " : missing elements...\n";
+		str_stream << ": missing elements...\n";
 		break;
 	default:
-		str_stream << " : syntax not recognized...\n"; 
+		str_stream << ": syntax not recognized...\n"; 
 		break;
 	}
 }

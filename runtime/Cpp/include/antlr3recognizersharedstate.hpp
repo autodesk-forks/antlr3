@@ -192,11 +192,20 @@ private:
      */
     ANTLR_MARKER		m_tokenStartCharIndex;
 
-    /** Text for the current token. This can be overridden by setting this
-     *  variable directly or by using the SETTEXT() macro (preferred) in your
-     *  lexer rules.
-     */
-    StringType			m_text;
+    // FIXME: Autodesk/Amino:
+    //
+    // Since we are not modifying the token stream in place, we have
+    // no use for having token referring to a string which is not part
+    // of the input stream. It turns out that being able to insert a
+    // token referring to a token allocated on the fly incurs a
+    // disproportionate of runtime cost...
+    //
+
+    // /** Text for the current token. This can be overridden by setting this
+    //  *  variable directly or by using the SETTEXT() macro (preferred) in your
+    //  *  lexer rules.
+    //  */
+    // StringType			m_text;
 
     /** Input stream stack, which allows the C programmer to switch input streams
      *  easily and allow the standard nextToken() implementation to deal with it
@@ -226,7 +235,7 @@ public:
 	ANTLR_INT32 get_tokenStartLine() const;
 	ANTLR_INT32 get_tokenStartCharPositionInLine() const;
 	ANTLR_MARKER get_tokenStartCharIndex() const;
-	StringType& get_text();
+	// StringType& get_text();
 	InputStreamsType& get_streams();
 
 	void  set_following( const FollowingType& following );
@@ -248,7 +257,7 @@ public:
 	void  set_tokenStartLine( ANTLR_INT32 tokenStartLine );
 	void  set_tokenStartCharPositionInLine( ANTLR_INT32 tokenStartCharPositionInLine );
 	void  set_tokenStartCharIndex( ANTLR_MARKER tokenStartCharIndex );
-	void  set_text( const StringType& text );
+	// void  set_text( const StringType& text );
 	void  set_streams( const InputStreamsType& streams );
 
 	void inc_errorCount();
@@ -261,5 +270,3 @@ ANTLR_END_NAMESPACE()
 #include "antlr3recognizersharedstate.inl"
 
 #endif
-
-
